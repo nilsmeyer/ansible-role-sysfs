@@ -1,0 +1,19 @@
+---
+
+- name: install sysfsutils
+  ansible.builtin.apt:
+    name: sysfsutils
+    state: present
+    update_cache: true
+    cache_valid_time: 7200
+
+- name: create settings file
+  ansible.builtin.include_tasks:
+    file: write_file.yml
+  loop: "{{ sysfs_settings|dict2items }}"
+  loop_control:
+    loop_var: _sysfs_settings
+  vars:
+    settings: "{{ _sysfs_settings.value }}"
+    filename: "{{ _sysfs_settings.key }}"
+

@@ -1,0 +1,13 @@
+---
+
+- name: set configuration settings
+  ansible.builtin.lineinfile:
+    path: "/etc/sysfs.d/{{ filename }}.conf"
+    line: "{{ item.key }} = {{ item.value }}"
+    create: true
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - reload sysfs settings
+  loop: "{{ settings | dict2items }}"

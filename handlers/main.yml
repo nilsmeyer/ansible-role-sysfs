@@ -1,0 +1,6 @@
+---
+
+- name: reload sysfs settings
+  ansible.builtin.systemd:
+    name: sysfsutils
+    state: restarted
